@@ -1,4 +1,5 @@
 import requests, os, json
+from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
@@ -6,6 +7,7 @@ from slowapi.errors import RateLimitExceeded
 from redis import Redis
 
 BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
+load_dotenv()
 API_KEY = os.getenv("WEATHER_API_KEY")
 PARAMETERS = {
     "key": API_KEY
