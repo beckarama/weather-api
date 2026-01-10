@@ -10,10 +10,10 @@ https://roadmap.sh/projects/weather-api-wrapper-service
 
 # API Endpoints 📍
 
-### GET /{city}
+### GET /weather/{city}
 Returns current weather data for a given city.
 
-(Ex. GET London,UK)
+(Ex. GET /weather/London,UK)
 
 ### GET /health
 Returns status of API.
