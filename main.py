@@ -1,13 +1,14 @@
 import requests, os, json
+
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from redis import Redis
 
-BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 load_dotenv()
+BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline"
 API_KEY = os.getenv("WEATHER_API_KEY")
 PARAMETERS = {
     "key": API_KEY
@@ -38,7 +39,7 @@ def get_weather(request: Request, city: str):
         response = requests.get(url, params=PARAMETERS)
 
         if response.status_code != 200:
-            return {"error": "Invalid location or API error"}, response.status_code
+            raise HTTPException(status_code=response.status_code, detail="Invalid location or API error")
         data_json = response.json()
 
     except requests.exceptions.ConnectionError:
