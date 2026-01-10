@@ -45,11 +45,12 @@ def get_weather(request: Request, city: str):
         data_json = response.json()
 
     except requests.exceptions.ConnectionError:
-        return {"Error": "Failed to connect to Weather API"}
+        raise HTTPException(status_code=502, detail="Failed to connect to weather provider.")
 
     # Sets data to cache. Expires after 5 minutes
     cache.set(cache_name, json.dumps(data_json), ex=300)
 
+    # Validate JSON
     return WeatherResponse(
         location=data_json["resolvedAddress"],
         description=data_json["days"][0]["description"],
