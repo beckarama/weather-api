@@ -1,3 +1,4 @@
+from models import WeatherResponse
 import requests, os, json
 
 from dotenv import load_dotenv
@@ -22,7 +23,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 cache = Redis(host="localhost", port=6379, decode_responses=True)
 
 
-@app.get("/weather/{city}")
+@app.get("/weather/{city}", response_model=WeatherResponse)
 @limiter.limit("10/minute")
 @limiter.limit("200/day")
 def get_weather(request: Request, city: str):
@@ -49,4 +50,15 @@ def get_weather(request: Request, city: str):
     # Sets data to cache. Expires after 5 minutes
     cache.set(cache_name, json.dumps(data_json), ex=300)
 
-    return data_json
+    return WeatherResponse(
+        location=data_json["resolvedAddress"],
+        description=data_json["days"][0]["description"],
+        temperature=data_json["days"][0]["temp"],
+        precipitation=data_json["days"][0]["precip"],
+        humidity=data_json["days"][0]["humidity"],
+        windspeed=data_json["days"][0]["windspeed"],
+        winddirection=data_json["days"][0]["winddir"],
+        alerts=data_json["alerts"],
+        snow=data_json["days"][0]["snow"],
+        snowdepth=data_json["days"][0]["snowdepth"]
+    )
