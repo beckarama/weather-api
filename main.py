@@ -36,7 +36,7 @@ def get_weather(request: Request, city: str):
     # Sends GET request to visualcrossing. Error Handling
     url = f"{BASE_URL}/{city}"
     try:
-        response = requests.get(url, params=PARAMETERS)
+        response = requests.get(url, params=PARAMETERS, timeout=10)
 
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail="Invalid location or API error")
