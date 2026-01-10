@@ -27,14 +27,15 @@ cache = Redis(host="localhost", port=6379, decode_responses=True)
 @limiter.limit("200/day")
 def get_weather(request: Request, city: str):
     # Checks cache for data
-    cache_name = f"weather:{city}"
+    city_norm = city.strip().lower()
+    cache_name = f"weather:{city_norm}"
     cached_data = cache.get(cache_name)
     if cached_data:
         print("returned from cached_data!")
         return json.loads(cached_data)
 
     # Sends GET request to visualcrossing. Error Handling
-    url = f"{BASE_URL}/{city}"
+    url = f"{BASE_URL}/{city_norm}"
     try:
         response = requests.get(url, params=PARAMETERS, timeout=10)
 
