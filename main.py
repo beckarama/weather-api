@@ -63,3 +63,18 @@ def get_weather(request: Request, city: str):
         snow=data_json["days"][0]["snow"],
         snowdepth=data_json["days"][0]["snowdepth"]
     )
+
+@app.get("/health")
+def health():
+    redis_status = True
+    api_key_status = bool(API_KEY)
+    try:
+        cache.ping()
+    except Exception:
+        redis_status = False
+
+
+    return {
+        "redis": "ok" if redis_status else "down",
+        "weather_api_key": "valid" if api_key_status else "missing"
+    }
