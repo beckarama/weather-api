@@ -3,21 +3,14 @@
 <img width="3000" height="750" alt="PoweredByVC-WeatherLogo-RoundedRectBlack" src="https://github.com/user-attachments/assets/98646418-d761-4512-8a3b-8050be4bfb9c" />
 
 Production-style Weather API that fetches data from Visual Crossing Weather, normalizes and validates responses using Pydantic, and serves clean JSON schemas. Frequently requested data is cached with Redis to reduce latency and external API usage. The service includes rate limiting and health checks to ensure reliability.
-
-This project was built as part of a backend engineering learning roadmap inspired by roadmap.sh.
-
+<br><br/>
+This project was built as part of a backend engineering learning roadmap inspired by roadmap.sh.  
 https://roadmap.sh/projects/weather-api-wrapper-service
 
 # API Endpoints 📍
+* `GET /weather/{city}` - Returns current weather data for a given city.
 
-### GET /weather/{city}
-Returns current weather data for a given city.
-
-(Ex. GET /weather/London,UK)
-
-### GET /health
-Returns status of API.
-
+* `GET /health` - Returns status of API.
 
 # Tech Stack 📚
 * Framework: FastAPI
