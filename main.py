@@ -32,7 +32,7 @@ def get_weather(request: Request, city: str):
     cache_name = f"weather:{city_norm}"
     cached_data = cache.get(cache_name)
     if cached_data:
-        print("returned from cached_data!")
+        print("Returned from cached data!")
         return json.loads(cached_data)
 
     # Sends GET request to visualcrossing. Error Handling
@@ -47,11 +47,8 @@ def get_weather(request: Request, city: str):
     except requests.exceptions.ConnectionError:
         raise HTTPException(status_code=502, detail="Failed to connect to weather provider.")
 
-    # Sets data to cache. Expires after 5 minutes
-    cache.set(cache_name, json.dumps(data_json), ex=300)
-
-    # Validate JSON
-    return WeatherResponse(
+    # JSON response structure
+    response_model = WeatherResponse(
         location=data_json["resolvedAddress"],
         description=data_json["days"][0]["description"],
         temperature=data_json["days"][0]["temp"],
@@ -64,6 +61,12 @@ def get_weather(request: Request, city: str):
         snowdepth=data_json["days"][0]["snowdepth"]
     )
 
+    # Sets data to cache. Expires after 5 minutes
+    cache.set(cache_name, response_model.model_dump_json(), ex=300)
+
+    return response_model
+
+# Returns API/Redis status
 @app.get("/api/health")
 def health():
     redis_status = True
