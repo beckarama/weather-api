@@ -64,7 +64,7 @@ def get_weather(request: Request, city: str):
         snowdepth=data_json["days"][0]["snowdepth"]
     )
 
-@app.get("/health")
+@app.get("/api/health")
 def health():
     redis_status = True
     api_key_status = bool(API_KEY)

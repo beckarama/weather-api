@@ -15,7 +15,7 @@ Returns current weather data for a given city.
 
 (Ex. GET London,UK)
 
-### GET /health
+### GET /api/health
 Returns status of API.
 
 
