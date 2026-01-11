@@ -23,7 +23,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 cache = Redis(host="localhost", port=6379, decode_responses=True)
 
 
-@app.get("/{city}", response_model=WeatherResponse)
+@app.get("/weather/{city}", response_model=WeatherResponse)
 @limiter.limit("10/minute")
 @limiter.limit("200/day")
 def get_weather(request: Request, city: str):
