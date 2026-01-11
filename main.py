@@ -73,7 +73,6 @@ def health():
     except Exception:
         redis_status = False
 
-
     return {
         "redis": "ok" if redis_status else "down",
         "weather_api_key": "valid" if api_key_status else "missing"
