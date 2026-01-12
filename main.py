@@ -52,13 +52,17 @@ def get_weather(request: Request, city: str):
         location=data_json["resolvedAddress"],
         description=data_json["days"][0]["description"],
         temperature=data_json["days"][0]["temp"],
+        max_temperature=data_json["days"][0]["tempmax"],
+        min_temperature=data_json["days"][0]["tempmin"],
         precipitation=data_json["days"][0]["precip"],
         humidity=data_json["days"][0]["humidity"],
-        windspeed=data_json["days"][0]["windspeed"],
-        winddirection=data_json["days"][0]["winddir"],
-        alerts=data_json["alerts"],
+        wind_speed=data_json["days"][0]["windspeed"],
+        wind_direction=data_json["days"][0]["winddir"],
         snow=data_json["days"][0]["snow"],
-        snowdepth=data_json["days"][0]["snowdepth"]
+        snow_depth=data_json["days"][0]["snowdepth"],
+        sunrise=data_json["days"][0]["sunrise"],
+        sunset=data_json["days"][0]["sunset"],
+        alerts=data_json["alerts"]
     )
 
     # Sets data to cache. Expires after 5 minutes

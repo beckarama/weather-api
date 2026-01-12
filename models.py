@@ -4,11 +4,15 @@ class WeatherResponse(BaseModel):
     location: str
     description: str
     temperature: float
+    max_temperature: float
+    min_temperature: float
     precipitation: float
     humidity: float
-    windspeed: float
-    winddirection: float
+    wind_speed: float
+    wind_direction: float
     snow: float
-    snowdepth: float
+    snow_depth: float
+    sunrise: str
+    sunset: str
     alerts: list
 
