@@ -19,5 +19,62 @@ https://roadmap.sh/projects/weather-api-wrapper-service
 * Caching: Redis
 * Rate Limiting: SlowAPI
 * HTTP Client: Requests
-# Blueprint 📝
-<img width="2048" height="1059" alt="weather-api-f8i1q" src="https://github.com/user-attachments/assets/b7ac855b-a3aa-418d-b2c9-a06a2d2d24d1" />
+
+## Installation ⚙️
+
+### Prerequisites
+- **Python 3.10+**
+- **Redis** (local installation or Docker)
+- **Visual Crossing Weather API Key**
+
+---
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/weather-api.git
+cd weather-api
+```
+2. **Create and activate a virtual environment**
+```bash
+python -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+.venv\Scripts\activate      # Windows
+```
+3. **Install dependencies**
+   
+```bash 
+pip install -r requirements.txt
+```
+
+5. **Environment variables**
+Create a ```.env``` file in the project root:
+
+```
+VISUAL_CROSSING_API_KEY=your_api_key_here
+REDIS_HOST=localhost
+REDIS_PORT=6379
+```
+
+5. **Start Redis**
+```bash
+redis-server
+```
+
+7. **Run the API**
+```bash
+uvicorn main:app --reload
+```
+
+9. **Test the API**
+Example Request:
+
+```bash 
+curl http://127.0.0.1:8000/London
+```
+
+Health check:
+
+```bash
+curl http://127.0.0.1:8000/api/health
+```
+
